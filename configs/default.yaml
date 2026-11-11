@@ -1,0 +1,34 @@
+# Main config -- intended for a GPU (Kaggle / Colab T4 or better).
+seed: 42
+
+paths:
+  raw: data/raw              # put Zindi downloads here (zips or extracted)
+  processed: data/processed  # resized images + YOLO labels
+  runs: runs                 # training runs
+  outputs: outputs           # predictions, thresholds, submissions
+
+prep:
+  max_side: 1536       # resize longest side (moths are small; don't go too low)
+  jpeg_quality: 92
+  val_fraction: 0.15
+  workers: 6           # parallel image processing (8 GB RAM -> keep <= 6)
+  orientation: auto    # auto | raw | exif  (auto = decide from train boxes)
+
+train:
+  model: yolov8s.pt    # yolov8n.pt (fast) / yolov8s.pt / yolov8m.pt (better, slower)
+  imgsz: 1024
+  epochs: 40
+  batch: 8
+  patience: 10
+  workers: 4
+  fraction: 1.0        # fraction of train set to use (smoke tests use less)
+  device: null         # null = auto (GPU if available)
+  name: yolov8s_1024
+
+predict:
+  imgsz: 1024
+  min_conf: 0.05       # keep everything above this; per-class thresholds tuned on val
+  iou: 0.6
+  max_det: 1500        # traps can contain hundreds of moths
+  tta: false           # test-time augmentation (slower, sometimes better)
+  batch: 8

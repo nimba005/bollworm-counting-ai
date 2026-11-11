@@ -1,0 +1,35 @@
+# Tiny end-to-end run on CPU to check the pipeline works (NOT for real scores).
+seed: 42
+
+paths:
+  raw: data/raw
+  processed: data/processed
+  runs: runs
+  outputs: outputs
+
+prep:
+  max_side: 1536
+  jpeg_quality: 92
+  val_fraction: 0.15
+  workers: 6
+  orientation: auto
+
+train:
+  model: yolov8n.pt
+  imgsz: 640
+  epochs: 1
+  batch: 4
+  patience: 10
+  workers: 2
+  fraction: 0.03
+  device: cpu
+  name: smoke
+
+predict:
+  imgsz: 640
+  min_conf: 0.05
+  iou: 0.6
+  max_det: 1500
+  tta: false
+  batch: 4
+  limit: 50            # only predict this many val/test images (smoke test)

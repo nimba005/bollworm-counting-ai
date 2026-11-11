@@ -1,0 +1,13 @@
+# Pinned versions used to develop/reproduce the solution (Python 3.12).
+# torch is installed separately:
+#   CPU (WSL):     pip install torch==2.15.0 torchvision==0.29.2 --index-url https://download.pytorch.org/whl/cpu
+#   GPU (Kaggle/Colab): use the preinstalled CUDA torch
+ultralytics==8.4.210
+opencv-python==5.0.0.93
+numpy==2.5.4
+pandas==3.1.1
+pillow==13.0.0
+scikit-learn==1.9.1
+pyyaml==6.0.3
+tqdm==4.70.1
+pytest==9.2.0
