@@ -21,6 +21,8 @@ def main():
     proc, out, raw = (resolve(cfg["paths"][k]) for k in ("processed", "outputs", "raw"))
     out.mkdir(parents=True, exist_ok=True)
 
+    if not (proc / "meta.csv").exists():
+        raise SystemExit(f"{proc / 'meta.csv'} not found -- run bollworm.prepare_data first (it needs the Zindi files in data/raw).")
     meta = pd.read_csv(proc / "meta.csv")
     tr, va = meta[meta.split == "train"], meta[meta.split == "val"]
     med = (int(tr.gt_abw.median()), int(tr.gt_pbw.median()))

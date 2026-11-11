@@ -98,6 +98,8 @@ def main():
     weights = args.weights or json.loads((out / "last_model.json").read_text())["weights"]
     limit = P.get("limit")
 
+    if not (proc / "meta.csv").exists():
+        raise SystemExit(f"{proc / 'meta.csv'} not found -- run bollworm.prepare_data first (it needs the Zindi files in data/raw).")
     meta = pd.read_csv(proc / "meta.csv")
     val = meta[meta.split == "val"]
     if limit:
